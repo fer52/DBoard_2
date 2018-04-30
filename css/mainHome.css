@@ -1,0 +1,79 @@
+﻿html, body
+{
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:100%;
+    height:100%;
+    overflow: hidden;
+}
+
+.dialogAjust > .ui-dialog-content{
+    padding: 0px;
+}
+.dialogAjust > .ui-dialog-titlebar{
+    background: transparent;
+    padding: 0px;
+    border: 0px;
+}
+
+.centraTable {margin: 20% auto;
+              width: 350px;
+          height: 180px;
+          padding: 25px;
+              }
+
+.headerFix 
+{
+
+    width:100%;
+    height: 40px;
+    border:1px solid #3084C3;
+    background-color:#537894;
+    
+}
+
+.maxSize
+{
+    position:relative;
+    width:100%;
+    height:100%;
+    border:2px solid red;
+    }
+    
+.backGroundPanel
+{
+    background: #FFFFFF url(../images/animatedEllipse.gif) center center no-repeat;
+    }
+    
+.userBack
+{
+    position:relative;
+    top:10px;
+    float:right;
+    color: white;
+    font-weight: bold;
+    } 
+    
+.shadowLogin
+{   border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 0 15px #999999!important;
+    border: 1px solid slategray;
+    }
+
+.loadBack
+{
+    position: absolute;
+    left: 40%;
+    top: 10%;
+    width: 80px;
+    height: 80px;
+}
+.valueCategory {
+    width:100%;
+    position:relative;
+    color:white;
+    margin:0px !important;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px slategray;
+}
