@@ -1,31 +1,184 @@
 <html>
 
 <head>
-
-
-
-
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="js/Dist/styles/wijmo.min.css" rel="stylesheet" />
-    <link href="js/Dist/styles/themes/wijmo.theme.darkly.min.css" rel="stylesheet" />
+    <!-- <link href="js/Dist/styles/wijmo.min.css" rel="stylesheet" />
+    <link href="js/Dist/styles/themes/wijmo.theme.darkly.min.css" rel="stylesheet" /> -->
 
-    <script src="js/Dist/controls/wijmo.min.js"></script>
-    <script src="js/Dist/controls/wijmo.input.min.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
 
-    <link href="css/mainHome.css" rel="stylesheet" />
-    <!-- <script src="node_modules/wijmo/wijmo.js"></script>
+    <link href="js/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+    <script src="js/jquery-ui/jquery-ui.min.js"></script>
 
-    <script src="node_modules/wijmo/wijmo.grid.js"></script>
-    <script src="node_modules/wijmo/wijmo.chart.js"></script>
-    <script src="node_modules/wijmo/wijmo.input.js"></script>
-    <script src="node_modules/wijmo/wijmo.gauge.js"></script>
-    <link href="node_modules/wijmo/styles/wijmo.css" rel="stylesheet" />
-    <link href="node_modules/wijmo/themes/wijmo.theme.darkly.css" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+
+    <!-- <script src="node_modules/chart.js/dist/Chart.bundle.min.js"></script> -->
+    <script src="node_modules/chart.js/dist/Chart.min.js"></script>
+
+    <script src="js/general.js"></script>
+
+    <script src="js/control.js"></script>
+    <style type="text/css">
+        html,
+        body {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            background-color: #252830;
+            overflow: hidden;
+        }
+
+        /* tabs on the left*/
+
+        /* .wj-tabpanel.tabs-on-left>div {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .wj-tabpanel.tabs-on-left .wj-tabheaders {
+            display: flex;
+            flex-direction: column;
+            min-width: 8em;
+            border-right: 1px solid #ddd;
+        }
+
+        .wj-tabpanel.tabs-on-left .wj-tabpanes {
+            display: flex;
+            flex-grow: 1;
+            border-top: none;
+            overflow-x: hidden;
+        }
+
+        .wj-tabpanes {
+            height: 100%;
+            padding: 45px 5px 5px 5px;
+            background-color: #252830;
+        } */
+
+        .cardData {
+            box-sizing: border-box;
+            color: #fff;
+            padding: 1rem !important;
+            height: 125px;
+            width: 250px;
+            display: inline-block;
+            margin: 3px;
+        }
+
+        /* background: linear-gradient(to bottom right, blue, blue, blue, white); */
+
+        .cardTitle {
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.90);
+            padding: 1rem !important;
+        }
+
+        .headerControl {
+            height: 45px;
+            width: 100%;
+            padding: 8px;
+            border-bottom: 0px solid slategrey;
+            position: fixed;
+        }
+    </style>
+
 </head>
 
 <body>
 
-   
+    <!-- <div class="headerControl">
+        <div style="position:relative;width: 50px;"></div>
+        <label style="color:rgb(73, 204, 232);" for="theInputDateOnly">Fecha de Evaluaci&oacute;n</label>
+        <input id="theInputDateOnly">
+
+        <a id="logout" href="index.html" style="margin-right:0px;float: right;">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB+klEQVRYR8WXu0oDQRSG/9lL0mTzDD6CYGMaQQUhlVXAImUKO6OFN7QQwQsiKawDQkQI2lhFmzyAIKRKYycKgqAStUjhjuwlkzV7mdlNdjMQAsnk/N/5z8zZE4IQi66gAIISgFyIn7m3pjWt9yERDWSLV0X3e+6TFAWyqsJ4t5c4QBl3kTKXZBmSqkBSVBDi0gsD0GFZVSiz0DPTt0egdQU8XACfz4GmcQEopdSMsEq+hADOZoCXlnCluAC9SAyEF3ozy9vx7/tAALqGWeQPmmhsz+GUNoUijwqArqIGikUmOlXUUKzxGUYB4BK3ZDOoUH7JhgVwief302jsdhMB8BRf2EnZNyDD/E9rlhMTOWC6BEwW+qWJ6oCveP8KugF6skvVPkQUAE/x+fUU5JQlYfUAfwDDiWWjUQIIC2BeNR03zEOj5obtIsspdmQ3ytAAZWwB5gsIIz6YbWSAcTtgJBJ4AOM+A6zXD3Y+Zzl4h3DYW8CF8AMYZR8IhEiqE/pCJPks8IVI8mnIIMY5Dww2wrFMRE4IKjoVO2Z+kW7OHzDsKML/C+ICMDumyD+jOAGCLDXOCCGE0A3NGuP56xfArXAJ+PGsHQIATRDU0SXXpNJ5TwrgHkAdun5JTn5encnECdAGaB1Qz8nxx5OfgzEAZPcg6XVy+N0WKdsfTl7SDu1T+2MAAAAASUVORK5CYII="
+            />
+        </a>
+        <label id="userName" style="color:rgb(73, 204, 232); float: right; margin-right: 10px;">test</label>
+    </div> -->
+
+    <div ng-app="evaluationApp" ng-controller="evaluationController" style="position: absolute;left: 0px;top: 0px;width: 100%;height: 100%;">
+        <div class="row" style="position: absolute; width: 100%; height: 100%; border: 0px;margin:0px; padding: 0px;">
+            <div class="col-sm-2" style="height: 100%;top:70px;">
+                <ul class="nav nav-pills nav-stacked">
+                    <li ng-class="{ active: isSet(1) }">
+                        <a href="#" ng-click="setTab(1)">Categor&iacutea</a>
+                    </li>
+                    <li ng-class="{ active: isSet(2) }">
+                        <a href "#" ng-click="setTab(2)">Seguimiento</a>
+                    </li>
+                    <!-- <li ng-class="{ active: isSet(3) }">
+                        <a href="index.html">LogOut</a>
+                    </li> -->
+                </ul>
+            </div>
+            <div class="col-sm-14">
+                <div id="bodyEv" style="overflow: auto;height: 100%;padding: 30px;" ng-show="isSet(1)">
+
+                </div>
+                <div id="bodyChart" style="overflow: auto;height: 100%;padding: 30px;" ng-show="isSet(2)">
+                </div>
+
+            </div>
+        </div>
+
+        <select id="selectDate" ng-controller="evaluationController" class="form-control" style="position: fixed;margin: 10px 15px; width: 150px"
+            ng-model="selectedDateSel" ng-options="x as x.l for x in selectedDate" ng-change="updateDate()">
+        </select>
+
+        <label id="userName" style="position: absolute; color:rgb(73, 204, 232); right: 60px; margin-top: 4px; ">user test</label>
+
+        <a id="logout" href="index.html" title="Salir" style="position: absolute;margin-top: 4px; right: 20px;">
+            <!-- <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB+klEQVRYR8WXu0oDQRSG/9lL0mTzDD6CYGMaQQUhlVXAImUKO6OFN7QQwQsiKawDQkQI2lhFmzyAIKRKYycKgqAStUjhjuwlkzV7mdlNdjMQAsnk/N/5z8zZE4IQi66gAIISgFyIn7m3pjWt9yERDWSLV0X3e+6TFAWyqsJ4t5c4QBl3kTKXZBmSqkBSVBDi0gsD0GFZVSiz0DPTt0egdQU8XACfz4GmcQEopdSMsEq+hADOZoCXlnCluAC9SAyEF3ozy9vx7/tAALqGWeQPmmhsz+GUNoUijwqArqIGikUmOlXUUKzxGUYB4BK3ZDOoUH7JhgVwief302jsdhMB8BRf2EnZNyDD/E9rlhMTOWC6BEwW+qWJ6oCveP8KugF6skvVPkQUAE/x+fUU5JQlYfUAfwDDiWWjUQIIC2BeNR03zEOj5obtIsspdmQ3ytAAZWwB5gsIIz6YbWSAcTtgJBJ4AOM+A6zXD3Y+Zzl4h3DYW8CF8AMYZR8IhEiqE/pCJPks8IVI8mnIIMY5Dww2wrFMRE4IKjoVO2Z+kW7OHzDsKML/C+ICMDumyD+jOAGCLDXOCCGE0A3NGuP56xfArXAJ+PGsHQIATRDU0SXXpNJ5TwrgHkAdun5JTn5encnECdAGaB1Qz8nxx5OfgzEAZPcg6XVy+N0WKdsfTl7SDu1T+2MAAAAASUVORK5CYII="
+        /> -->
+            <i class="fas fa-sign-out-alt fa-2x" style="color:#c01a1a"></i>
+        </a>
+    </div>
+    <!-- 
+    <div id="controlTabPanel" style="width: 100%; height: 100%; border: 0px;" class="tabs-on-left">
+        <div>
+            <a>Evaluacion</a>
+            <div id="bodyEv">
+
+            </div>
+        </div>
+        <div>
+            <a>Seguimiento</a>
+            <div>
+
+            </div>
+        </div>
+    </div> -->
+
+    <!-- <script id="propertyTemplate" type="text/x-jQuery-tmpl">
+        <div class="cardData" style="background: linear-gradient(to bottom right, blue, blue, blue, white);">
+            <span class="cardTitle">${desc}</span>
+            <h2>${value}</h2>
+        </div>       
+    </script> -->
+
+    <div id="dialog-form" style="display: none" title="Create new user">
+        <p class="validateTips">All form fields are required.</p>
+
+        <div>
+            <fieldset>
+                <label for="name">Contraseña</label>
+                <input type="text" name="name" id="name" value="Jane Smith" class="text ui-widget-content ui-corner-all">
+                <label for="email">Verificación de Contraseña</label>
+                <input type="text" name="email" id="email" value="jane@smith.com" class="text ui-widget-content ui-corner-all">
+
+            </fieldset>
+        </div>
+    </div>
+
 </body>
 
 </html>

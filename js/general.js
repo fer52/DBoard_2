@@ -1,13 +1,26 @@
 
+
 // alert popup
 function alertPopup(options, callback) {
-    var dialog = createDialog(options);
+
+    $("#warningInfo").html(options.body);
+
+    $("#dialog-message").dialog({
+        modal: true,
+        buttons: {
+            Ok: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    /*var dialog = createDialog(options);
     var popup = new wijmo.input.Popup(dialog);
     popup.show(true, function (sender) {
         if (callback) {
             callback(sender.dialogResult);
         }
-    });
+    });*/
 }
 
 // prompt popup
